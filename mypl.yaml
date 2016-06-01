@@ -1,0 +1,15 @@
+- hosts: localhost
+  tasks:
+  - name: yum GIT Latest
+    yum: name=git state=latest
+    become: yes
+    become_method: sudo
+  - name: get project code
+    git: repo=https://github.com/ytahover/spring-petclinic.git dest=/home/usr/tmp/pc accept_hostkey=True
+    become: yes
+  - name: import zip file
+    get_url: url="http://apache.spd.co.il/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz" dest=/tmp/apache-maven-3.3.9-bin.tar.gz
+    become: yes
+  - name: unarchive maven zip file
+    unarchive: src=/tmp/apache-maven-3.3.9-bin.tar.gz dest=~
+    
